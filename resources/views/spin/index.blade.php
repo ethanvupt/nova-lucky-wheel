@@ -6,7 +6,7 @@
     <ul class="list-group">
         @foreach ($spinEvents as $spinEvent)
         <li class="list-group-item">
-            <a href="{{Route('spins', $spinEvent)}}">{{ $spinEvent->name }}</a>
+            <a href="{{Route('spins-detail', $spinEvent)}}">{{ $spinEvent->name }}</a>
         </li>
         @endforeach
     </ul>

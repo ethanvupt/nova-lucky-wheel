@@ -2,6 +2,7 @@
 
 @section('body')
 <div class="col-6">
+    <a href="{{ Route('spins') }}">Go back</a>
     <h1>{{ $spinEvent->name }} - Lucky Wheel</h1>
     <h2>Wining Items</h2>
     <ul class="list-group">
