@@ -18,5 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('spin/{id}', [LuckyWheelController::class, 'ShowWheel']);
+Route::get('spins/{id}', [LuckyWheelController::class, 'ShowWheel'])->name('spins');
+Route::get('spins', [LuckyWheelController::class, 'ShowAllWheel']);
 Route::post('lucky-wheel/{id}', [LuckyWheelController::class, 'LuckyWheel'])->name('lucky-wheel');

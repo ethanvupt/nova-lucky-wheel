@@ -10,11 +10,19 @@ class LuckyWheelController extends Controller
 {
     const DECIMAL_STEP = 10;
 
+    public function ShowAllWheel()
+    {
+        $spinEvents = SpinEvent::all();
+        return view('spin.index', [
+            'spinEvents' => $spinEvents
+        ]);
+    }
+
     public function ShowWheel($id)
     {
         $spinEvent = SpinEvent::find($id);
         $items = $spinEvent->products;
-        return view('spin.index', [
+        return view('spin.detail', [
             'spinEvent' => $spinEvent,
             'items' => $items,
         ]);
