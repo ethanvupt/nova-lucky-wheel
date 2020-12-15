@@ -11,6 +11,9 @@ php artisan migrate
 php artisan nova:user
 ```
 
+Go to **/nova/resources/spin-events** to create new spin event + Create new product in spin event detail page
+Go to **/spins/** to view all spins
+
 ## Contributing
 
 Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
