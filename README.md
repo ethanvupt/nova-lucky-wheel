@@ -11,7 +11,7 @@ php artisan migrate
 php artisan nova:user
 ```
 
-Go to **/nova/resources/spin-events** to create new spin event + Create new product in spin event detail page
+Go to **/nova/resources/spin-events** to create new spin event + Create new product in spin event detail page\
 Go to **/spins/** to view all spins
 
 ## Contributing
