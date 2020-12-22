@@ -17,7 +17,7 @@
 <canvas id='myCanvas' width='400' height='400'>
     Canvas not supported, use another browser.
 </canvas>
-<button onClick="calculatePrize();">Spin the Wheel</button>
+<button class="btn btn-primary" onClick="calculatePrize();">Spin the Wheel</button>
 @endsection
 
 @section('script')
