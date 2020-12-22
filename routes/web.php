@@ -20,4 +20,3 @@ Route::get('/', function () {
 
 Route::get('spins/{id}', [LuckyWheelController::class, 'ShowWheel'])->name('spins-detail');
 Route::get('spins', [LuckyWheelController::class, 'ShowAllWheel'])->name('spins');
-Route::post('lucky-wheel/{id}', [LuckyWheelController::class, 'LuckyWheel'])->name('lucky-wheel');

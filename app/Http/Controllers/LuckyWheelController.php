@@ -31,7 +31,9 @@ class LuckyWheelController extends Controller
     public function LuckyWheel($id)
     {
         $items = SpinEvent::find($id)->products;
-        return $this->chance($items);
+        $winningItem =  $this->chance($items);
+        $winningAngle = $this->calAngle($items, $winningItem);
+        return $winningAngle;
     }
 
     public function chance($items)
@@ -41,14 +43,27 @@ class LuckyWheelController extends Controller
         $number = rand(0, $max_value);
         // echo 'Checking for: ' . $number . '<br>';
         $starter = 0;
+        $count = 1;
         foreach ($items as $item) {
             $starter += $item->fixed_percent * self::DECIMAL_STEP;
             // echo 'Current value being tested against is: ' . $starter . ' which is ' . $item->name . '<br>';
             if ($number <= $starter) {
-                $winItem = $item->name;
+                $winItem = $item;
                 break;
             }
+            $count++;
         }
-        return $winItem;
+        return [$winItem, $count];
+    }
+
+    public function calAngle($items, $winningItem)
+    {
+        $totalItems = $items->count();
+        $eachItemAngle = 360/$totalItems;
+        $winItemAngle = $winningItem[1] * $eachItemAngle;
+        $startWinItemAngle = $winItemAngle - $eachItemAngle + 1;
+        $endWinItemAngle = $winItemAngle - 1;
+
+        return rand($startWinItemAngle, $endWinItemAngle);
     }
 }
