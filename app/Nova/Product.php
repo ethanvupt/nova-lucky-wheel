@@ -59,8 +59,7 @@ class Product extends Resource
                 ->rules('required'),
 
             Image::make(__('Image'), 'image')
-                ->disk('public')
-                ->rules('required'),
+                ->disk('public'),
         ];
     }
 
