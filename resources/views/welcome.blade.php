@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<!--==========================
+{{-- <!--==========================
       About Us Section
     ============================-->
 <section id="about">
@@ -948,6 +948,6 @@
         </ul>
 
     </div>
-</section><!-- #faq -->
+</section><!-- #faq --> --}}
 
 @endsection
