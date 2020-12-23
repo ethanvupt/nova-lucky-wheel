@@ -1,23 +1,51 @@
 @extends('layouts.app')
 
-@section('body')
-<div class="col-6">
-    <a href="{{ Route('spins') }}">Go back</a>
-    <h1>{{ $spinEvent->name }} - Lucky Wheel</h1>
-    <h2>Wining Items</h2>
-    <ul class="list-group">
-        @foreach ($items as $item)
-        <li class="list-group-item">
-            {{ $item->name }}
-            <span class="badge badge-primary badge-pill">{{ $item->fixed_percent }}%</span>
-        </li>
-        @endforeach
-    </ul>
-</div>
-<canvas id='myCanvas' width='400' height='400'>
-    Canvas not supported, use another browser.
-</canvas>
-<button class="btn btn-primary" onClick="calculatePrize();">Spin the Wheel</button>
+@section('content')
+<section id="testimonials">
+    <div class="container">
+        <header class="section-header">
+            <h3>{{ $spinEvent->name }} event</h3>
+        </header>
+        <div class="row justify-content-center">
+            <canvas id='myCanvas' width='450' height='450'>
+                Canvas not supported, use another browser.
+            </canvas>
+        </div>
+        <div class="row justify-content-center">
+            <button class="btn btn-dark" onClick="calculatePrize();">Spin the Wheel</button>
+        </div>
+    </div>
+</section>
+
+<section id="team" class="section-bg">
+    <div class="container">
+        <div class="section-header">
+            <h3>Winning items for this event</h3>
+        </div>
+
+        <div class="row">
+            @foreach ($items as $item)
+            <div class="col-lg-3 col-md-6 wow fadeInUp">
+                <div class="member">
+                    <img src="{{ Storage::disk('public')->url($item->image) }}" onerror="this.src='https://picsum.photos/300/300?random=1';" class="img-fluid" alt="" style="height: 300px; width: 300px">
+                    <div class="member-info">
+                        <div class="member-info-content">
+                            <h4>{{ $item->name }}</h4>
+                            <span>{{ $item->fixed_percent }}%</span>
+                            <div class="social">
+                                <a href=""><i class="fa fa-twitter"></i></a>
+                                <a href=""><i class="fa fa-facebook"></i></a>
+                                <a href=""><i class="fa fa-google-plus"></i></a>
+                                <a href=""><i class="fa fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
 @endsection
 
 @section('script')
@@ -25,11 +53,14 @@
     let theWheel = new Winwheel({
         'canvasId': 'myCanvas',
         'numSegments': {{ $items->count() }},
-        'outerRadius': 170,
+        'outerRadius': 200,
+        'innerRadius': 30,
+        'textMargin' : 0,
+    'imageDirection' : 'S',
         'responsive': true, // This wheel is responsive!
         'segments': [
             @foreach($items as $item) {
-                'fillStyle': '#eae56f',
+                'fillStyle': '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6),
                 'text': '{{ $item->name }}'
             },
             @endforeach
@@ -47,6 +78,9 @@
             'callbackAfter': 'drawTriangle()'
         }
     });
+
+    // Function to draw pointer using code (like in a previous tutorial).
+    drawTriangle();
 
     // This function called after the spin animation has stopped.
     function alertPrize() {
@@ -81,21 +115,18 @@
         })
     }
 
-    // Function to draw pointer using code (like in a previous tutorial).
-    drawTriangle();
-
     function drawTriangle() {
         // Get the canvas context the wheel uses.
         let ctx = theWheel.ctx;
 
-        ctx.strokeStyle = 'navy'; // Set line colour.
-        ctx.fillStyle = 'aqua'; // Set fill colour.
+        ctx.strokeStyle = '#413e66'; // Set line colour.
+        ctx.fillStyle = '#413e66'; // Set fill colour.
         ctx.lineWidth = 2;
         ctx.beginPath(); // Begin path.
-        ctx.moveTo(170, 5); // Move to initial position.
-        ctx.lineTo(230, 5); // Draw lines to make the shape.
-        ctx.lineTo(200, 40);
-        ctx.lineTo(171, 5);
+        ctx.moveTo(200, 5); // Move to initial position.
+        ctx.lineTo(260, 5); // Draw lines to make the shape.
+        ctx.lineTo(230, 40);
+        ctx.lineTo(201, 5);
         ctx.stroke(); // Complete the path by stroking (draw lines).
         ctx.fill(); // Then fill.
     }

@@ -5,6 +5,7 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -55,6 +56,10 @@ class Product extends Resource
             Number::make(__('Fix Percent'), 'fixed_percent')
                 ->sortable()
                 ->step(0.1)
+                ->rules('required'),
+
+            Image::make(__('Image'), 'image')
+                ->disk('public')
                 ->rules('required'),
         ];
     }

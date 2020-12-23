@@ -15,7 +15,8 @@ class Product extends Model
         'name',
         'spin_event_id',
         'short_description',
-        'fixed_percent'
+        'fixed_percent',
+        'image'
     ];
 
     public function spinEvent()
