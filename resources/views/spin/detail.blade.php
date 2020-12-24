@@ -65,7 +65,25 @@
         let winningSegment = theWheel.getIndicatedSegment();
 
         // Basic alert of the segment text which is the prize name.
-        alert("You have won " + winningSegment.text + "!");
+        // alert("You have won " + winningSegment.image + "!");
+        if (winningSegment.text != 'Good Luck') {
+            Swal.fire({
+                title: 'Sweet!',
+                text: 'You have won ' + winningSegment.text + '!',
+                imageUrl: winningSegment.image,
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'Custom image',
+            })
+        } else {
+            Swal.fire({
+                title: 'Good Luck Next Time!',
+                imageUrl: winningSegment.image,
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'Custom image',
+            })
+        }
     }
 
     // Function with formula to work out stopAngle before spinning animation.
@@ -93,7 +111,12 @@
                 theWheel.startAnimation();
             },
             error: function (data) {
-                alert(data.responseJSON.errors.email[0]);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: data.responseJSON.errors.email[0] ? 'You need to enter your email to spin' : 'Server Error',
+                    confirmButtonColor: '#413e66',
+                })
             }
         })
     }

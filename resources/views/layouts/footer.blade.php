@@ -4,7 +4,7 @@
   <footer id="footer" class="section-bg">
       <div class="container">
           <div class="copyright">
-              &copy; Copyright <strong>Rapid</strong>. All Rights Reserved
+              &copy; Copyright <strong>Apps Cyclone</strong>. All Rights Reserved
           </div>
           <div class="credits">
               <!--
@@ -13,7 +13,6 @@
           Licensing information: https://bootstrapmade.com/license/
           Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Rapid
         -->
-              Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
           </div>
       </div>
   </footer><!-- #footer -->
