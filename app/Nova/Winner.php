@@ -2,29 +2,27 @@
 
 namespace App\Nova;
 
-use App\Models\SpinEvent as ModelsSpinEvent;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class SpinEvent extends Resource
+class Winner extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\SpinEvent::class;
+    public static $model = \App\Models\Winner::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -32,8 +30,32 @@ class SpinEvent extends Resource
      * @var array
      */
     public static $search = [
-        'name',
+        'id',
     ];
+
+    /**
+     * The number of resources to show per page via relationships.
+     *
+     * @var int
+     */
+    public static $perPageViaRelationship = 20;
+
+    public static $displayInNavigation = false;
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return false;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return false;
+    }
 
     /**
      * Get the fields displayed by the resource.
@@ -46,23 +68,14 @@ class SpinEvent extends Resource
         return [
             ID::make(__('ID'), 'id')->sortable(),
 
-            HasMany::make('Products')
+            Text::make(__('Email'), 'email')
                 ->sortable(),
 
-            HasMany::make(__('Winners'), 'winners')
-                ->sortable()
-                ->hideWhenCreating()
-                ->hideWhenUpdating(),
-
-            Text::make(__('Name'), 'name')
-                ->rules('required')
+            BelongsTo::make(__('Spin Event'), 'spinEvent')
                 ->sortable(),
 
-            Number::make(__('Total Fixed Percent'), function () {
-                return $this->products->sum('fixed_percent');
-            })
-                ->hideWhenCreating()
-                ->hideWhenUpdating(),
+            Text::make(__('Win Prize'), 'win_prize')
+                ->sortable(),
         ];
     }
 

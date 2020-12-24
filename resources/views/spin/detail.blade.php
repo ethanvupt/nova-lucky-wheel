@@ -6,43 +6,15 @@
         <header class="section-header">
             <h3>{{ $spinEvent->name }} event</h3>
         </header>
-        <div class="row justify-content-center">
-            <canvas id='myCanvas' width='450' height='450'>
+        <div class="row justify-content-center" id="spinButton">
+            <div class="form-group col-4">
+                <input class="form-control form-control-lg mb-3" type="email" id="email" name="email" placeholder="Enter your email to spin" required>
+            </div>
+        </div>
+        <div class="row justify-content-center canvas-container">
+            <canvas id='myCanvas' width='900' height='900' onClick="calculatePrize();">
                 Canvas not supported, use another browser.
             </canvas>
-        </div>
-        <div class="row justify-content-center">
-            <button class="btn btn-dark" onClick="calculatePrize();">Spin the Wheel</button>
-        </div>
-    </div>
-</section>
-
-<section id="team" class="section-bg">
-    <div class="container">
-        <div class="section-header">
-            <h3>Winning items for this event</h3>
-        </div>
-
-        <div class="row">
-            @foreach ($items as $item)
-            <div class="col-lg-3 col-md-6 wow fadeInUp">
-                <div class="member">
-                    <img src="{{ Storage::disk('public')->url($item->image) }}" onerror="this.src='https://picsum.photos/300/300?random=1';" class="img-fluid" alt="" style="height: 300px; width: 300px">
-                    <div class="member-info">
-                        <div class="member-info-content">
-                            <h4>{{ $item->name }}</h4>
-                            <span>{{ $item->fixed_percent }}%</span>
-                            <div class="social">
-                                <a href=""><i class="fa fa-twitter"></i></a>
-                                <a href=""><i class="fa fa-facebook"></i></a>
-                                <a href=""><i class="fa fa-google-plus"></i></a>
-                                <a href=""><i class="fa fa-linkedin"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endforeach
         </div>
     </div>
 </section>
@@ -52,15 +24,20 @@
 <script>
     let theWheel = new Winwheel({
         'canvasId': 'myCanvas',
-        'numSegments': {{ $items->count() }},
-        'outerRadius': 200,
-        'innerRadius': 30,
-        'textMargin' : 0,
-    'imageDirection' : 'S',
-        'responsive': true, // This wheel is responsive!
+        'numSegments': {{ $items->count() }},          // Specify number of segments.
+        'outerRadius'       : 420,
+        'innerRadius'       : 150,
+        'textFontSize'      : 30,
+        'textOrientation'   : 'curved',
+        'lineWidth'   : 4,
+        'textAlignment'     : 'center',
+        'textFontFamily'    : 'monospace',
+        'textFillStyle'     : 'black',
         'segments': [
             @foreach($items as $item) {
-                'fillStyle': '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6),
+                'strokeStyle' : '#413e66',
+                'fillStyle': '',
+                'image': '{{ Storage::disk('public')->url($item->image) }}',
                 'text': '{{ $item->name }}'
             },
             @endforeach
@@ -97,6 +74,9 @@
         $.ajax({
             type: "POST",
             url: "/api/lucky-wheel/{{ $spinEvent->id }}",
+            data: {
+                'email': $('#email').val()
+            },
             success: function (data) {
                 console.log(data);
 
@@ -112,6 +92,9 @@
                 // May as well start the spin from here.
                 theWheel.startAnimation();
             },
+            error: function (data) {
+                alert(data.responseJSON.errors.email[0]);
+            }
         })
     }
 
@@ -119,14 +102,14 @@
         // Get the canvas context the wheel uses.
         let ctx = theWheel.ctx;
 
-        ctx.strokeStyle = '#413e66'; // Set line colour.
+        ctx.strokeStyle = '#000'; // Set line colour.
         ctx.fillStyle = '#413e66'; // Set fill colour.
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 3;
         ctx.beginPath(); // Begin path.
-        ctx.moveTo(200, 5); // Move to initial position.
-        ctx.lineTo(260, 5); // Draw lines to make the shape.
-        ctx.lineTo(230, 40);
-        ctx.lineTo(201, 5);
+        ctx.moveTo(420, 5); // Move to initial position.
+        ctx.lineTo(480, 5); // Draw lines to make the shape.
+        ctx.lineTo(450, 40);
+        ctx.lineTo(421, 5);
         ctx.stroke(); // Complete the path by stroking (draw lines).
         ctx.fill(); // Then fill.
     }

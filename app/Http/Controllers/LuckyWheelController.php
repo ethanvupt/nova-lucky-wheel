@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SpinEvent;
+use App\Models\Winner;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -28,10 +29,24 @@ class LuckyWheelController extends Controller
         ]);
     }
 
-    public function LuckyWheel($id)
+    public function LuckyWheel(Request $request, $id)
     {
-        $items = SpinEvent::find($id)->products;
+        $request->validate([
+            'email' => 'required|email'
+        ]);
+
+        $spinEvent = SpinEvent::find($id);
+        $items = $spinEvent->products;
         $winningItem =  $this->chance($items);
+
+        Winner::create([
+            'spin_event_id' => $spinEvent->id,
+            'product_id' => $winningItem[0]->id,
+            'email' => $request->email,
+            'event' => $spinEvent->name,
+            'win_prize' => $winningItem[0]->name,
+        ]);
+
         $winningAngle = $this->calAngle($items, $winningItem);
         return $winningAngle;
     }

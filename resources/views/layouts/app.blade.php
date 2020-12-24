@@ -30,7 +30,7 @@
 
     <!-- Main Stylesheet File -->
     <link href="css/style.css" rel="stylesheet">
-    <script src="winwheel/Winwheel.min.js"></script>
+    <script src="winwheel/Winwheel.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
 
     <!-- =======================================================
@@ -43,24 +43,6 @@
 
 <body>
     @include('layouts.header')
-
-    <!--==========================
-    Intro Section
-  ============================-->
-    <section id="intro" class="clearfix">
-        <div class="container d-flex h-100">
-            <div class="row justify-content-center align-self-center">
-                <div class="col-md-6 intro-info order-md-first order-last">
-                    <h2>Suicide Squad Spins<br>Try your luck</span></h2>
-                </div>
-
-                <div class="col-md-6 intro-img order-md-last order-first">
-                    <img src="img/intro-img.svg" alt="" class="img-fluid">
-                </div>
-            </div>
-
-        </div>
-    </section><!-- #intro -->
 
     <main id="main">
 

@@ -19,4 +19,8 @@ class SpinEvent extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    public function winners(){
+        return $this->hasMany(Winner::class);
+    }
 }

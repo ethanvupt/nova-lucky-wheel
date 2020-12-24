@@ -159,7 +159,6 @@ h6 {
   z-index: 997;
   transition: all 0.5s;
   padding: 20px 0;
-  position: fixed;
   left: 0;
   top: 0;
   right: 0;
@@ -593,6 +592,12 @@ h6 {
   box-shadow: 0 10px 29px 0 rgba(68, 88, 144, 0.1);
   transition: all 0.3s ease-in-out;
   text-align: center;
+}
+
+.canvas-container {
+    background-image: url("../img/wheel-background.png");
+    background-repeat: no-repeat;   /* Ensure that background does not repeat */
+    background-position: center;    /* Ensure image is centred */
 }
 
 #services .box:hover {
